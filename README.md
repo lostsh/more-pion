@@ -1,4 +1,4 @@
-<a href="discussions/1">![banner](announce.png)</a>
+<a href="../../discussions/1">![banner](announce.png)</a>
 
 # more-pion
 
