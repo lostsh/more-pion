@@ -59,6 +59,31 @@
         }
         table .one{background-color: black; clip-path: polygon(5% 0%, 50% 45%, 95% 0%, 100% 5%, 55% 50%, 100% 95%, 95% 100%, 50% 55%, 5% 100%, 0% 95%, 45% 50%, 0% 5%);} 
         table .two{ border: 10% solid black; border-radius: 100%; }
+
+        .showScore {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgb(159, 159, 159);
+            opacity: 0.9;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .showScore div{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .showScore div span{
+            cursor: pointer;
+            border: 4px black solid;
+            padding: 5px;
+        }
     </style>
 </head>
 

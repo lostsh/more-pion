@@ -5,15 +5,32 @@ const DEBUG = false;
  */
 var grid = [];
 
+/**
+ * Morpion game object
+ */
+var game = null;
+
 function main(){
-    var m = new Morpion();
+    game = new Morpion();
+}
+
+function niam() {
+    //clear html tags
+    document.querySelector("body").removeChild(document.querySelector(".showScore"));
+    document.querySelector(".main").removeChild(document.querySelector("table"));
+    console.clear();
+
+    //reset game vars
+    game = null;
+    grid = [];
+    
+    main();
 }
 
 /**
  * Morpion game main class
  */
 class Morpion{
-    //grid = [];
     currentPlayer = {player:true}//player one is true
 
     constructor(){
@@ -112,20 +129,6 @@ function Cellule(lig, col){
     }
 }
 
-// RECURSIVE VICTORY CONDITION
-/*
-function isVictorious(grid, col, lig, curPlay){
-    return victory(grid, col, lig, curPlay.player?1:2) > 2;
-}
-
-function victory(grid, col, lig, player){
-    if (player != grid[lig][col].state) return 0;
-    if(col+1 > 2 || lig+1 > 2) return 0;
-    return 1 + victory(grid, col+1, lig+1, player);
-}
-*/
-
-//NOOOOOOOOOOOOOOOOOOTFFINIIIISH TODOOOOOOOOOOOOOOOOOOOOOO
 function victoryManager(grid) {
     var winner = victory(grid);
     switch(winner){
@@ -134,11 +137,46 @@ function victoryManager(grid) {
             break;
         case 0:
             console.log("No Winner TIE");
-            break;                
+            showVictory("No winner tie");
+            break;
         default :
             console.log("Winner is "+ (winner==1?"cross":"round"));
-            break;                
+            showVictory("Winner is "+ (winner==1?"cross":"round"));
+            break;
     }
+}
+
+/**
+ * Display the end game screen
+ * @param {*} winner 0 if tie 1 cross and 2 round
+ */
+function showVictory(winnerMsg) {
+    //TODO : display victory screen
+    /*
+    for(var i=0;i<3;i++){
+        for(var j=0;j<3;j++){
+            //remove action of each cell
+            //grid[i][j].dom.removeEventListener("click", grid[i][j].click);
+        }
+    }*/
+    const mainTag = document.querySelector("body");
+
+    var divShowScore = document.createElement("div");
+    divShowScore.className = "showScore";
+
+    var container = document.createElement("div");
+    
+    var h2 = document.createElement("h2");
+    h2.textContent = winnerMsg;
+    var span = document.createElement("span");
+    span.textContent = "Play again";
+    span.addEventListener("click", niam);
+    
+    container.appendChild(h2);
+    container.appendChild(span);
+    divShowScore.appendChild(container);
+
+    mainTag.appendChild(divShowScore);
 }
 
 /**
@@ -198,17 +236,6 @@ function column(grid, col) {
  * @returns 0 or player number (1 or 2)
  */
 function diagonals(grid) {
-    /*
-    var diagOneWinner = grid[0][0].state;
-    var diagTwoWinner = grid[2][0].state;
-    for(var i=1;i<3;i++){
-        for(var j=1;j<3;j++){
-            if(grid[i][j].state != grid[i-1][j-1].state) diagOneWinner = 0;
-            if(grid[2-i][j].state != grid[3-i][j-1].state) diagTwoWinner = 0;
-        }
-    }
-    console.log("diags : one:"+diagOneWinner+" two:"+diagTwoWinner);
-    return diagOneWinner!=0?diagOneWinner:diagTwoWinner;*/
     var one = grid[0][0].state;
     if(one != 0 && one == grid[1][1].state && one == grid[2][2].state) return one; 
     var two = grid[0][2].state;
